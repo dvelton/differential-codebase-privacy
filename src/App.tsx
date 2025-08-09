@@ -140,7 +140,7 @@ async function transformCode(originalCode: string, language: string, privacyLeve
   // Apply various transformations - MUCH MORE AGGRESSIVE
   let synthetic = originalCode
   
-  // 1. COMPREHENSIVE Business entity obfuscation
+  // 1. COMPREHENSIVE Business entity obfuscation - ENHANCED FOR INDUSTRIES
   const businessEntityMap = new Map([
     // Core business entities
     ['customer', 'entity'], ['client', 'entity'], ['user', 'entity'], ['buyer', 'entity'], 
@@ -148,23 +148,67 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     ['patient', 'entity'], ['student', 'entity'], ['employee', 'entity'],
     ['vendor', 'entity'], ['supplier', 'entity'], ['partner', 'entity'],
     
-    // Business operations
+    // Banking/Financial specific
+    ['borrower', 'entity'], ['lender', 'entity'], ['investor', 'entity'], ['trader', 'entity'],
+    ['account_holder', 'entity'], ['cardholder', 'entity'], ['debtor', 'entity'], ['creditor', 'entity'],
+    
+    // Insurance specific
+    ['policyholder', 'entity'], ['insured', 'entity'], ['beneficiary', 'entity'], ['claimant', 'entity'],
+    ['underwriter', 'entity'], ['adjuster', 'entity'], ['agent', 'entity'], ['broker', 'entity'],
+    
+    // Healthcare/Pharmaceutical specific
+    ['physician', 'entity'], ['researcher', 'entity'], ['participant', 'entity'], ['subject', 'entity'],
+    ['investigator', 'entity'], ['clinician', 'entity'], ['practitioner', 'entity'],
+    
+    // Business operations - ENHANCED
     ['order', 'operation'], ['purchase', 'operation'], ['transaction', 'operation'],
     ['sale', 'operation'], ['payment', 'operation'], ['invoice', 'operation'],
     ['billing', 'operation'], ['prescription', 'operation'], ['enrollment', 'operation'],
     ['assignment', 'operation'], ['contract', 'operation'], ['agreement', 'operation'],
     ['appointment', 'operation'], ['reservation', 'operation'], ['booking', 'operation'],
     
-    // Business resources
+    // Financial operations
+    ['loan', 'operation'], ['mortgage', 'operation'], ['deposit', 'operation'], ['withdrawal', 'operation'],
+    ['transfer', 'operation'], ['trade', 'operation'], ['investment', 'operation'], ['settlement', 'operation'],
+    
+    // Insurance operations  
+    ['claim', 'operation'], ['policy', 'operation'], ['premium', 'operation'], ['coverage', 'operation'],
+    ['deductible', 'operation'], ['copay', 'operation'], ['coinsurance', 'operation'],
+    
+    // Healthcare operations
+    ['diagnosis', 'operation'], ['treatment', 'operation'], ['procedure', 'operation'], ['therapy', 'operation'],
+    ['examination', 'operation'], ['consultation', 'operation'], ['screening', 'operation'],
+    
+    // Business resources - ENHANCED
     ['product', 'resource'], ['item', 'resource'], ['asset', 'resource'],
     ['inventory', 'resource'], ['catalog', 'resource'], ['sku', 'resource'],
     ['medication', 'resource'], ['course', 'resource'], ['project', 'resource'],
     ['service', 'resource'], ['subscription', 'resource'], ['plan', 'resource'],
     
-    // Data objects
+    // Financial resources
+    ['security', 'resource'], ['bond', 'resource'], ['stock', 'resource'], ['option', 'resource'],
+    ['derivative', 'resource'], ['commodity', 'resource'], ['currency', 'resource'], ['fund', 'resource'],
+    
+    // Insurance resources
+    ['benefit', 'resource'], ['rider', 'resource'], ['endorsement', 'resource'], ['exclusion', 'resource'],
+    
+    // Pharmaceutical resources
+    ['compound', 'resource'], ['drug', 'resource'], ['molecule', 'resource'], ['formulation', 'resource'],
+    ['dosage', 'resource'], ['indication', 'resource'], ['biomarker', 'resource'],
+    
+    // Data objects - ENHANCED
     ['account', 'record'], ['profile', 'record'], ['document', 'record'],
     ['file', 'record'], ['report', 'record'], ['chart', 'record'],
-    ['transcript', 'record'], ['history', 'record'], ['log', 'record']
+    ['transcript', 'record'], ['history', 'record'], ['log', 'record'],
+    
+    // Financial records
+    ['portfolio', 'record'], ['statement', 'record'], ['balance', 'record'], ['ledger', 'record'],
+    
+    // Insurance records
+    ['application', 'record'], ['certificate', 'record'], ['declaration', 'record'],
+    
+    // Healthcare records
+    ['medical_record', 'record'], ['test_result', 'record'], ['lab_report', 'record'], ['imaging', 'record']
   ])
 
   // Apply entity transformations with word boundaries
@@ -173,31 +217,73 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     synthetic = synthetic.replace(regex, replacement)
   })
 
-  // 2. AGGRESSIVE Business method obfuscation
+  // 2. AGGRESSIVE Business method obfuscation - ENHANCED FOR INDUSTRIES
   const businessMethods = [
-    // Financial calculations
-    { pattern: /\b(calculate|compute|process|generate|validate|analyze)(Tax|Price|Rate|Commission|Fee|Cost|Profit|Revenue|Discount|Interest|Premium|Salary|Wage|Risk|Credit|Loan|Mortgage|Billing|Payment)\b/gi, replacement: 'computeBusinessValue' },
-    { pattern: /\b(get|fetch|retrieve|load|find|search|query)(Customer|User|Order|Product|Payment|Patient|Student|Employee|Account|Profile|Invoice|Transaction|Report|Data)\b/gi, replacement: 'fetchEntityData' },
-    { pattern: /\b(save|store|update|create|delete|modify|edit|insert|upsert)(Customer|User|Order|Product|Payment|Patient|Student|Employee|Account|Profile|Invoice|Transaction|Record)\b/gi, replacement: 'persistEntityData' },
-    { pattern: /\b(send|email|notify|alert|message|contact|communicate)(Customer|User|Patient|Student|Employee|Client|Vendor)\b/gi, replacement: 'communicateWithEntity' },
-    { pattern: /\b(validate|verify|check|confirm|authorize|authenticate)(Payment|Transaction|Order|Purchase|Account|Identity|Credentials|Access)\b/gi, replacement: 'validateOperation' },
-    { pattern: /\b(process|handle|manage|execute|perform)(Transaction|Payment|Order|Purchase|Sale|Billing|Invoice|Request|Operation)\b/gi, replacement: 'executeBusinessProcess' }
+    // Financial calculations - ENHANCED
+    { pattern: /\b(calculate|compute|process|generate|validate|analyze)(Tax|Price|Rate|Commission|Fee|Cost|Profit|Revenue|Discount|Interest|Premium|Salary|Wage|Risk|Credit|Loan|Mortgage|Billing|Payment|Trading|Signal|Position|Portfolio|Volatility|Momentum|Sentiment|Kelly|Elasticity|Demand)\b/gi, replacement: 'computeBusinessValue' },
+    
+    // Banking specific methods
+    { pattern: /\b(assess|evaluate|determine|calculate)(Credit|Risk|Score|Rating|Worthiness|Stability|Collateral|Debt|Income|Employment|Fraud|Default|Approval|Underwriting|Compliance)\b/gi, replacement: 'assessRiskFactor' },
+    { pattern: /\b(fetch|get|retrieve)(Fico|Experian|Equifax|Credit|Bureau|Score|Report|History|Background|Verification)\b/gi, replacement: 'fetchCreditData' },
+    { pattern: /\b(encrypt|hash|secure|protect)(Ssn|Social|Security|Number|Pii|Personal|Sensitive|Data)\b/gi, replacement: 'secureIdentifier' },
+    
+    // Insurance specific methods
+    { pattern: /\b(calculate|determine|assess|predict)(Premium|Risk|Claim|Probability|Actuarial|Underwriting|Loss|Exposure|Liability|Coverage|Benefit)\b/gi, replacement: 'calculateInsuranceMetric' },
+    { pattern: /\b(analyze|evaluate|process)(Telematics|Driving|Behavior|Claims|Fraud|Application|Policy|Coverage)\b/gi, replacement: 'analyzeInsuranceData' },
+    { pattern: /\b(fetch|get|retrieve)(Telematics|Weather|Fraud|Credit|Motor|Vehicle|History|Data)\b/gi, replacement: 'fetchInsuranceData' },
+    
+    // Healthcare/Pharmaceutical specific methods
+    { pattern: /\b(calculate|assess|predict|analyze)(Patient|Risk|Outcome|Treatment|Response|Adherence|Survival|Efficacy|Safety|Toxicity|Bioavailability|Absorption|Distribution|Metabolism|Excretion)\b/gi, replacement: 'computeHealthMetric' },
+    { pattern: /\b(process|analyze|anonymize|hash)(Patient|Cohort|Clinical|Medical|Health|Hipaa|Phi|Pii|Sensitive)\b/gi, replacement: 'processHealthData' },
+    { pattern: /\b(predict|model|simulate)(Clinical|Trial|Success|Failure|Admet|Properties|Binding|Affinity|Drug|Likeness|Synthetic|Route)\b/gi, replacement: 'predictOutcome' },
+    { pattern: /\b(optimize|design|calculate)(Trial|Study|Sample|Size|Dose|Escalation|Biomarker|Strategy|Endpoint)\b/gi, replacement: 'optimizeStudyDesign' },
+    
+    // Generic business methods - ENHANCED
+    { pattern: /\b(get|fetch|retrieve|load|find|search|query)(Customer|User|Order|Product|Payment|Patient|Student|Employee|Account|Profile|Invoice|Transaction|Report|Data|Entity|Operation|Resource|Record)\b/gi, replacement: 'fetchEntityData' },
+    { pattern: /\b(save|store|update|create|delete|modify|edit|insert|upsert)(Customer|User|Order|Product|Payment|Patient|Student|Employee|Account|Profile|Invoice|Transaction|Record|Entity|Operation|Resource)\b/gi, replacement: 'persistEntityData' },
+    { pattern: /\b(send|email|notify|alert|message|contact|communicate)(Customer|User|Patient|Student|Employee|Client|Vendor|Entity)\b/gi, replacement: 'communicateWithEntity' },
+    { pattern: /\b(validate|verify|check|confirm|authorize|authenticate)(Payment|Transaction|Order|Purchase|Account|Identity|Credentials|Access|Operation)\b/gi, replacement: 'validateOperation' },
+    { pattern: /\b(process|handle|manage|execute|perform)(Transaction|Payment|Order|Purchase|Sale|Billing|Invoice|Request|Operation|Claim|Policy|Prescription|Treatment)\b/gi, replacement: 'executeBusinessProcess' }
   ]
 
   businessMethods.forEach(({ pattern, replacement }) => {
     synthetic = synthetic.replace(pattern, replacement)
   })
 
-  // 3. COMPREHENSIVE API and URL transformation
+  // 3. COMPREHENSIVE API and URL transformation - ENHANCED FOR INDUSTRIES
   const apiPatterns = [
+    // Generic API patterns
     { pattern: /\/api\/v\d+\/[\w\/-]+/g, replacement: '/api/v1/generic-endpoint' },
     { pattern: /\/v\d+\/[\w\/-]+/g, replacement: '/v1/generic-endpoint' },
-    { pattern: /https?:\/\/[\w\.-]*\.(com|org|net|io|co\.uk)[\w\/-]*/g, replacement: 'https://api.example.com/endpoint' },
+    
+    // Industry-specific API endpoints
+    // Banking/Financial APIs
+    { pattern: /https?:\/\/[^\/]*fico[^\/]*\.com[\w\/-]*/gi, replacement: 'https://credit-bureau.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*experian[^\/]*\.com[\w\/-]*/gi, replacement: 'https://credit-bureau.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*equifax[^\/]*\.com[\w\/-]*/gi, replacement: 'https://credit-bureau.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*lexisnexis[^\/]*\.com[\w\/-]*/gi, replacement: 'https://identity-verification.example.com/api' },
+    
+    // Insurance APIs
+    { pattern: /https?:\/\/[^\/]*telematics[^\/]*\.(com|io|net)[\w\/-]*/gi, replacement: 'https://telematics-api.example.com/endpoint' },
+    { pattern: /https?:\/\/[^\/]*fraud[^\/]*detect[^\/]*\.(com|io|net)[\w\/-]*/gi, replacement: 'https://fraud-detection.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*insurancetech[^\/]*\.(com|io|net)[\w\/-]*/gi, replacement: 'https://insurance-service.example.com/api' },
+    
+    // Healthcare/Pharmaceutical APIs
+    { pattern: /https?:\/\/[^\/]*clinicaltrials[^\/]*\.(gov|com|org)[\w\/-]*/gi, replacement: 'https://clinical-data.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*pharmatech[^\/]*\.(com|io|net)[\w\/-]*/gi, replacement: 'https://pharma-service.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*pubchem[^\/]*\.(gov|nih\.gov)[\w\/-]*/gi, replacement: 'https://compound-database.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*drugbank[^\/]*\.(ca|com|org)[\w\/-]*/gi, replacement: 'https://drug-database.example.com/api' },
+    { pattern: /https?:\/\/[^\/]*fda[^\/]*\.(gov)[\w\/-]*/gi, replacement: 'https://regulatory-agency.example.com/api' },
+    
+    // Generic domain patterns
+    { pattern: /https?:\/\/[\w\.-]*\.(com|org|net|io|co\.uk|gov|edu)[\w\/-]*/g, replacement: 'https://api.example.com/endpoint' },
     { pattern: /https?:\/\/[\w\.-]+/g, replacement: 'https://service.example.com' },
-    { pattern: /\/[\w\/-]*\/(customers|users|clients|members)\/[\w\/-]*/gi, replacement: '/api/entities/{id}' },
-    { pattern: /\/[\w\/-]*\/(orders|transactions|purchases|sales)\/[\w\/-]*/gi, replacement: '/api/operations/{id}' },
-    { pattern: /\/[\w\/-]*\/(products|items|resources|assets)\/[\w\/-]*/gi, replacement: '/api/resources/{id}' },
-    { pattern: /\/[\w\/-]*\/(accounts|profiles|records)\/[\w\/-]*/gi, replacement: '/api/records/{id}' }
+    
+    // Entity-specific endpoints
+    { pattern: /\/[\w\/-]*\/(customers|users|clients|members|patients|borrowers|policyholders|entities)\/[\w\/-]*/gi, replacement: '/api/entities/{id}' },
+    { pattern: /\/[\w\/-]*\/(orders|transactions|purchases|sales|loans|claims|policies|treatments|operations)\/[\w\/-]*/gi, replacement: '/api/operations/{id}' },
+    { pattern: /\/[\w\/-]*\/(products|items|resources|assets|securities|drugs|compounds|medications)\/[\w\/-]*/gi, replacement: '/api/resources/{id}' },
+    { pattern: /\/[\w\/-]*\/(accounts|profiles|records|portfolios|medical_records)\/[\w\/-]*/gi, replacement: '/api/records/{id}' }
   ]
 
   apiPatterns.forEach(({ pattern, replacement }) => {
@@ -220,9 +306,9 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     synthetic = synthetic.replace(pattern, replacement)
   })
 
-  // 5. COMPREHENSIVE Variable and property name transformation
+  // 5. COMPREHENSIVE Variable and property name transformation - ENHANCED FOR INDUSTRIES
   const variablePatterns = [
-    // Financial terms
+    // Financial terms - ENHANCED
     { pattern: /\b\w*[Pp]rice\w*\b/g, replacement: 'valueAmount' },
     { pattern: /\b\w*[Rr]ate\w*\b/g, replacement: 'numericRate' },
     { pattern: /\b\w*[Aa]mount\w*\b/g, replacement: 'numericValue' },
@@ -237,7 +323,46 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     { pattern: /\b\w*[Tt]ax\w*\b/g, replacement: 'feeValue' },
     { pattern: /\b\w*[Cc]ommission\w*\b/g, replacement: 'bonusValue' },
     
-    // Business identifiers
+    // Banking-specific terms
+    { pattern: /\b\w*[Cc]redit\w*\b/g, replacement: 'riskMetric' },
+    { pattern: /\b\w*[Ll]oan\w*\b/g, replacement: 'financingValue' },
+    { pattern: /\b\w*[Mm]ortgage\w*\b/g, replacement: 'propertyFinancing' },
+    { pattern: /\b\w*[Ii]nterest\w*\b/g, replacement: 'yieldRate' },
+    { pattern: /\b\w*[Cc]ollateral\w*\b/g, replacement: 'securityAsset' },
+    { pattern: /\b\w*[Dd]ebt\w*\b/g, replacement: 'obligationAmount' },
+    { pattern: /\b\w*[Ee]quity\w*\b/g, replacement: 'ownershipValue' },
+    { pattern: /\b\w*[Pp]ortfolio\w*\b/g, replacement: 'assetCollection' },
+    { pattern: /\b\w*[Vv]olatility\w*\b/g, replacement: 'variabilityMeasure' },
+    { pattern: /\b\w*[Mm]omentum\w*\b/g, replacement: 'trendIndicator' },
+    { pattern: /\b\w*[Ss]entiment\w*\b/g, replacement: 'marketMood' },
+    
+    // Insurance-specific terms
+    { pattern: /\b\w*[Pp]remium\w*\b/g, replacement: 'policyFee' },
+    { pattern: /\b\w*[Cc]laim\w*\b/g, replacement: 'requestValue' },
+    { pattern: /\b\w*[Dd]eductible\w*\b/g, replacement: 'initialCost' },
+    { pattern: /\b\w*[Cc]overage\w*\b/g, replacement: 'protectionScope' },
+    { pattern: /\b\w*[Ll]iability\w*\b/g, replacement: 'responsibilityAmount' },
+    { pattern: /\b\w*[Uu]nderwriting\w*\b/g, replacement: 'assessmentProcess' },
+    { pattern: /\b\w*[Aa]ctuarial\w*\b/g, replacement: 'statisticalModel' },
+    { pattern: /\b\w*[Tt]elematics\w*\b/g, replacement: 'behaviorData' },
+    { pattern: /\b\w*[Ff]raud\w*\b/g, replacement: 'irregularityScore' },
+    
+    // Healthcare/Pharmaceutical terms
+    { pattern: /\b\w*[Pp]atient\w*\b/g, replacement: 'subjectData' },
+    { pattern: /\b\w*[Dd]iagnosis\w*\b/g, replacement: 'conditionCode' },
+    { pattern: /\b\w*[Tt]reatment\w*\b/g, replacement: 'interventionPlan' },
+    { pattern: /\b\w*[Mm]edication\w*\b/g, replacement: 'therapeuticAgent' },
+    { pattern: /\b\w*[Dd]osage\w*\b/g, replacement: 'administrationAmount' },
+    { pattern: /\b\w*[Cc]ompliance\w*\b/g, replacement: 'adherenceRate' },
+    { pattern: /\b\w*[Cc]ohort\w*\b/g, replacement: 'studyGroup' },
+    { pattern: /\b\w*[Bb]iomarker\w*\b/g, replacement: 'biologicalIndicator' },
+    { pattern: /\b\w*[Ee]fficacy\w*\b/g, replacement: 'effectivenessMeasure' },
+    { pattern: /\b\w*[Tt]oxicity\w*\b/g, replacement: 'adverseEffectLevel' },
+    { pattern: /\b\w*[Mm]olecule\w*\b/g, replacement: 'chemicalCompound' },
+    { pattern: /\b\w*[Cc]ompound\w*\b/g, replacement: 'activeSubstance' },
+    { pattern: /\b\w*[Tt]rial\w*\b/g, replacement: 'studyPhase' },
+    
+    // Business identifiers - ENHANCED
     { pattern: /\b\w*[Ii]nvoice\w*\b/g, replacement: 'documentId' },
     { pattern: /\b\w*[Oo]rder\w*\b/g, replacement: 'operationId' },
     { pattern: /\b\w*[Cc]ustomer\w*\b/g, replacement: 'entityId' },
@@ -263,10 +388,31 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     synthetic = synthetic.replace(pattern, replacement)
   })
 
-  // 7. COMPREHENSIVE Configuration and secrets obfuscation
+  // 7. COMPREHENSIVE Configuration and secrets obfuscation - ENHANCED FOR INDUSTRIES
   const configPatterns = [
+    // Generic secrets
     { pattern: /\b[A-Z_]+_(API_KEY|SECRET|PASSWORD|TOKEN|CREDENTIAL|AUTH|ACCESS_KEY|PRIVATE_KEY)\b/g, replacement: 'API_CREDENTIAL' },
     { pattern: /\b[A-Z_]+_(URL|ENDPOINT|HOST|DOMAIN|SERVER|BASE_URL)\b/g, replacement: 'SERVICE_ENDPOINT' },
+    
+    // Industry-specific API keys and secrets
+    // Banking/Financial
+    { pattern: /\b(FICO|EXPERIAN|EQUIFAX|LEXIS_NEXIS|CREDIT_BUREAU)_[A-Z_]+\b/g, replacement: 'CREDIT_SERVICE_KEY' },
+    { pattern: /\b(BLOOMBERG|REUTERS|MARKET_DATA|TRADING|EXCHANGE)_[A-Z_]+\b/g, replacement: 'MARKET_DATA_KEY' },
+    { pattern: /\b(FEDERAL_RATE|FED_API|TREASURY|INTEREST_RATE)_[A-Z_]+\b/g, replacement: 'FINANCIAL_DATA_KEY' },
+    
+    // Insurance
+    { pattern: /\b(TELEMATICS|TMT_INS|DRIVING_DATA|VEHICLE_DATA)_[A-Z_]+\b/g, replacement: 'TELEMATICS_KEY' },
+    { pattern: /\b(FRAUD_DETECT|CLAIM_ANALYSIS|RISK_ASSESSMENT)_[A-Z_]+\b/g, replacement: 'FRAUD_DETECTION_KEY' },
+    { pattern: /\b(WEATHER|WTH_SECRET|METEOROLOGICAL)_[A-Z_]+\b/g, replacement: 'WEATHER_SERVICE_KEY' },
+    { pattern: /\b(ACTUARIAL|INSURANCE_TECH|UNDERWRITING)_[A-Z_]+\b/g, replacement: 'INSURANCE_SERVICE_KEY' },
+    
+    // Healthcare/Pharmaceutical
+    { pattern: /\b(HIPAA|PHI|PII|PATIENT_DATA)_[A-Z_]+\b/g, replacement: 'HEALTH_DATA_KEY' },
+    { pattern: /\b(PUBCHEM|DRUGBANK|COMPOUND_DB|MOLECULE_DATA)_[A-Z_]+\b/g, replacement: 'COMPOUND_DATABASE_KEY' },
+    { pattern: /\b(FDA|REGULATORY|CLINICAL_TRIALS|SUBMISSION)_[A-Z_]+\b/g, replacement: 'REGULATORY_SERVICE_KEY' },
+    { pattern: /\b(PHARMATECH|DRUG_DISCOVERY|BIOTECH)_[A-Z_]+\b/g, replacement: 'PHARMA_SERVICE_KEY' },
+    
+    // General third-party services
     { pattern: /\b(STRIPE|PAYPAL|AMAZON|GOOGLE|FACEBOOK|TWITTER|LINKEDIN|SALESFORCE|HUBSPOT|ZENDESK)_[A-Z_]+\b/g, replacement: 'EXTERNAL_SERVICE_KEY' },
     { pattern: /\b(DATABASE|DB|REDIS|MONGO|POSTGRES|MYSQL|ORACLE)_[A-Z_]+\b/g, replacement: 'DATABASE_CONFIG' },
     { pattern: /\b(JWT|OAuth|SAML|LDAP|OIDC)_[A-Z_]+\b/g, replacement: 'AUTH_CONFIG' },
@@ -344,7 +490,7 @@ async function transformCode(originalCode: string, language: string, privacyLeve
     })
   }
 
-  // 13. SUPER AGGRESSIVE transformations for paranoid mode
+  // 13. SUPER AGGRESSIVE transformations for paranoid mode - ENHANCED FOR INDUSTRIES
   if (intensity > 0.8) {
     const aggressivePatterns = [
       // Business metrics and KPIs
@@ -352,15 +498,37 @@ async function transformCode(originalCode: string, language: string, privacyLeve
       { pattern: /\b(conversion_rate|churn_rate|retention_rate|growth_rate|cac|customer_acquisition_cost|cpa|cost_per_acquisition)\b/gi, replacement: 'performance_metric' },
       { pattern: /\b(engagement|bounce_rate|session_duration|page_views|click_through_rate|ctr|open_rate)\b/gi, replacement: 'interaction_metric' },
       
-      // Industry-specific terms
-      { pattern: /\b(prescription|diagnosis|treatment|therapy|medical|healthcare|hipaa|phi|pii)\b/gi, replacement: 'regulated_data' },
-      { pattern: /\b(grade|gpa|transcript|enrollment|tuition|ferpa|student_record)\b/gi, replacement: 'academic_data' },
-      { pattern: /\b(trading|portfolio|investment|securities|compliance|finra|sec|aml|kyc)\b/gi, replacement: 'financial_data' },
+      // Banking/Financial industry terms
+      { pattern: /\b(trading|portfolio|investment|securities|compliance|finra|sec|aml|kyc|basel|dodd_frank|mifid|cftc|occ|fdic)\b/gi, replacement: 'financial_regulatory_data' },
+      { pattern: /\b(fico|experian|equifax|credit_score|credit_report|credit_bureau|underwriting|loan_to_value|debt_to_income|kelly_criterion)\b/gi, replacement: 'credit_assessment_data' },
+      { pattern: /\b(derivative|swap|option|future|bond|equity|commodity|forex|treasury|fed_funds|libor|sofr)\b/gi, replacement: 'financial_instrument_data' },
+      { pattern: /\b(risk_weighted_assets|var|value_at_risk|stress_test|scenario_analysis|monte_carlo|black_scholes)\b/gi, replacement: 'risk_model_data' },
+      
+      // Insurance industry terms
+      { pattern: /\b(actuarial|mortality|morbidity|longevity|catastrophe|reinsurance|ceding|retrocession)\b/gi, replacement: 'actuarial_data' },
+      { pattern: /\b(telematics|usage_based|pay_as_you_drive|claim_frequency|claim_severity|loss_ratio|combined_ratio)\b/gi, replacement: 'insurance_metric_data' },
+      { pattern: /\b(underwriting|risk_assessment|premium_calculation|experience_rating|credibility_weighting)\b/gi, replacement: 'underwriting_process_data' },
+      { pattern: /\b(fraud_detection|special_investigation|claims_analytics|predictive_modeling)\b/gi, replacement: 'fraud_analysis_data' },
+      
+      // Healthcare/Pharmaceutical industry terms
+      { pattern: /\b(prescription|diagnosis|treatment|therapy|medical|healthcare|hipaa|phi|pii|patient_safety)\b/gi, replacement: 'regulated_health_data' },
+      { pattern: /\b(clinical_trial|fda|ich_gcp|protocol|endpoint|biomarker|pharmacokinetics|pharmacodynamics)\b/gi, replacement: 'clinical_research_data' },
+      { pattern: /\b(drug_discovery|compound_screening|hit_identification|lead_optimization|admet|toxicology)\b/gi, replacement: 'drug_development_data' },
+      { pattern: /\b(efficacy|safety|tolerability|adverse_event|serious_adverse_event|investigational_new_drug)\b/gi, replacement: 'clinical_outcome_data' },
+      { pattern: /\b(molecular_target|binding_affinity|selectivity|potency|bioavailability|half_life|clearance)\b/gi, replacement: 'pharmacological_data' },
+      { pattern: /\b(indication|contraindication|dosing_regimen|therapeutic_window|drug_interaction)\b/gi, replacement: 'therapeutic_data' },
+      
+      // Education industry terms
+      { pattern: /\b(grade|gpa|transcript|enrollment|tuition|ferpa|student_record|academic_performance)\b/gi, replacement: 'academic_data' },
       
       // Advanced business operations
       { pattern: /\b(lead|prospect|opportunity|pipeline|forecast|quota|territory|commission)\b/gi, replacement: 'sales_data' },
       { pattern: /\b(campaign|segment|persona|funnel|attribution|cohort|retention)\b/gi, replacement: 'marketing_data' },
-      { pattern: /\b(inventory|warehouse|fulfillment|logistics|supply_chain|procurement)\b/gi, replacement: 'operations_data' }
+      { pattern: /\b(inventory|warehouse|fulfillment|logistics|supply_chain|procurement)\b/gi, replacement: 'operations_data' },
+      
+      // Competitive intelligence terms
+      { pattern: /\b(competitor|competitive_analysis|market_share|pricing_strategy|differentiation|moat|competitive_advantage)\b/gi, replacement: 'market_analysis_data' },
+      { pattern: /\b(intellectual_property|patent|trademark|trade_secret|proprietary_algorithm|secret_sauce)\b/gi, replacement: 'intellectual_asset_data' }
     ]
 
     aggressivePatterns.forEach(({ pattern, replacement }) => {
