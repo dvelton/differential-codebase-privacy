@@ -7,7 +7,7 @@ A proof-of-concept prototype exploring the application of **Differential Privacy
 
 ## Differential Privacy for Source Code
 
-This project explores an architecture that applies the principles of Differential Privacy to solve this challenge. The **Privacy-Preserving Synthetic Codebase Generator** analyzes a private codebase and generates a synthetic version that is *differentially private*.
+This project explores an architecture that applies the principles of Differential Privacy to solve a challenge. The **Privacy-Preserving Synthetic Codebase Generator** analyzes a private codebase and generates a synthetic version that is *differentially private*.
 
 `[Private Enterprise Codebase]` → `[DP-Enabled SYNTHETIC GENERATOR]` → `[Differentially Private Synthetic Code]` → `[External LLM]`
 
