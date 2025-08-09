@@ -1,13 +1,13 @@
 # Differentially Private Synthetic Codebase Generator 
 
-A proof-of-concept prototype exploring the application of **Differential Privacy** principles to source code, abstracting sufficiently from an original codebase to preserve privacy and security while simultaneously maintaining sufficient similarity to be practically useful as context for ingestion by AI tools.
+A proof-of-concept prototype exploring the application of Differential Privacy principles to source code, abstracting sufficiently from an original codebase to preserve privacy and security while simultaneously maintaining sufficient similarity to be practically useful as context for ingestion by AI tools.
 
 ![Dashboard View](screenshot.png)
 ---
 
 ## Differential Privacy for Source Code
 
-This project explores an architecture that applies the principles of Differential Privacy to solve a challenge. The **Privacy-Preserving Synthetic Codebase Generator** analyzes a private codebase and generates a synthetic version that is *differentially private*.
+This project explores an architecture that applies the principles of Differential Privacy to solve a challenge. It analyzes a private codebase and generates a synthetic version that is *differentially private*.
 
 `[Private Enterprise Codebase]` → `[DP-Enabled SYNTHETIC GENERATOR]` → `[Differentially Private Synthetic Code]` → `[External LLM]`
 
