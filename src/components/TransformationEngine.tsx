@@ -3,7 +3,8 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Shield, Eye, Zap, CheckCircle, AlertTriangle } from "@phosphor-icons/react"
+import { Shield, Eye, Zap, CheckCircle, AlertTriangle, GitBranch } from "@phosphor-icons/react"
+import { CodeDiffViewer } from "@/components/CodeDiffViewer"
 
 interface CodeData {
   original: string
@@ -144,12 +145,19 @@ export function TransformationEngine({ codeData }: TransformationEngineProps) {
         </CardContent>
       </Card>
 
+      {/* GitHub-style Diff Viewer */}
+      <CodeDiffViewer 
+        original={original}
+        synthetic={synthetic}
+        language={codeData.language}
+      />
+
       {/* Code Comparison */}
       <Card>
         <CardHeader>
-          <CardTitle>Original vs Synthetic Code Comparison</CardTitle>
+          <CardTitle>Legacy Side-by-Side Comparison</CardTitle>
           <CardDescription>
-            Side-by-side view showing privacy transformation while preserving functionality
+            Traditional view showing privacy transformation while preserving functionality
           </CardDescription>
         </CardHeader>
         <CardContent>
