@@ -35,7 +35,7 @@ This generator ensures that its output—the synthetic code—remains substantia
 
 ## Project Status: A Thought Experiment
 
-This repository contains a `vibe coded` proof-of-concept. It is **not** a mathematically rigorous, production-ready implementation of Differential Privacy. Rather, it is a thought experiment designed to explore how these powerful privacy-preserving concepts can be translated to the domain of software engineering.
+This repo contains a proof-of-concept. It is not a mathematically rigorous, production-ready implementation of Differential Privacy. It's a thought experiment designed to explore how privacy-preserving concepts can be translated to the domain of software engineering.
 
 ---
 
