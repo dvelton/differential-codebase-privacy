@@ -1,13 +1,13 @@
-# Differentially Private Synthetic Codebase Generator 🧪
+# Differentially Private Synthetic Codebase Generator 
 
 A proof-of-concept prototype exploring the application of **Differential Privacy** principles to source code, abstracting sufficiently from an original codebase to preserve privacy and security while simultaneously maintaining sufficient similarity to be practically useful as context for ingestion by AI tools.
 
 ![Dashboard View](screenshot.png)
 ---
 
-## The Solution: Differential Privacy for Source Code
+## Differential Privacy for Source Code
 
-This project proposes an architecture that applies the principles of Differential Privacy to solve this challenge. The **Privacy-Preserving Synthetic Codebase Generator** analyzes a private codebase and generates a synthetic version that is *differentially private*.
+This project explores an architecture that applies the principles of Differential Privacy to solve this challenge. The **Privacy-Preserving Synthetic Codebase Generator** analyzes a private codebase and generates a synthetic version that is *differentially private*.
 
 `[Private Enterprise Codebase]` → `[DP-Enabled SYNTHETIC GENERATOR]` → `[Differentially Private Synthetic Code]` → `[External LLM]`
 
@@ -24,7 +24,7 @@ This generator ensures that its output—the synthetic code—remains substantia
 
 ---
 
-## ✨ Key Features & Goals
+## Key Features & Goals
 
 * **Differential Privacy by Design:** The core transformation is built to ensure the synthetic output does not leak information about individual proprietary functions, variables, or constants.
 * **High Utility:** While ensuring privacy, the generator's primary goal is to preserve the high-level architectural patterns, control flow, and data structures that are essential for an LLM to generate useful, context-aware code.
@@ -33,7 +33,7 @@ This generator ensures that its output—the synthetic code—remains substantia
 
 ---
 
-## 🚦 Project Status: A Thought Experiment
+## Project Status: A Thought Experiment
 
 This repository contains a `vibe coded` proof-of-concept. It is **not** a mathematically rigorous, production-ready implementation of Differential Privacy. Rather, it is a thought experiment designed to explore how these powerful privacy-preserving concepts can be translated to the domain of software engineering.
 
