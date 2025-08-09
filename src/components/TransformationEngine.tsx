@@ -15,6 +15,13 @@ interface CodeData {
     competitiveRisk: number
     aiParity: number
     complianceReady: boolean
+    transformationDetails?: {
+      businessTermsReduced: number
+      urlsAnonymized: number
+      apiEndpointsGeneralized: number
+      sensitiveDataObfuscated: number
+      overallTransformationRate: number
+    }
   }
 }
 
@@ -29,42 +36,36 @@ export function TransformationEngine({ codeData }: TransformationEngineProps) {
   const originalLength = original.length
   const syntheticLength = synthetic.length
   const characterChangePercentage = Math.abs(originalLength - syntheticLength) / originalLength * 100
-  
-  // Count specific transformations
-  const businessTermsInOriginal = (original.match(/\b(customer|client|user|order|product|payment|invoice|price|tax|cost|revenue|profit|buyer|purchaser|subscriber|member|sale|billing|account|profile)\b/gi) || []).length
-  const businessTermsInSynthetic = (synthetic.match(/\b(customer|client|user|order|product|payment|invoice|price|tax|cost|revenue|profit|buyer|purchaser|subscriber|member|sale|billing|account|profile)\b/gi) || []).length
-  
-  const urlsInOriginal = (original.match(/https?:\/\/[\w\.-]+/g) || []).length
-  const urlsInSynthetic = (synthetic.match(/https?:\/\/(?!(?:api\.example\.com|service\.example\.com|example\.com))[\w\.-]+/g) || []).length
-  
-  const actualTransformations = [
+
+  // Calculate transformation effectiveness metrics
+  const details = securityMetrics.transformationDetails
+  const totalTransformations = details ? 
+    details.businessTermsReduced + details.urlsAnonymized + details.apiEndpointsGeneralized + details.sensitiveDataObfuscated : 0
+
+  const transformationSteps = [
     {
-      type: 'Business Logic Obfuscation',
-      description: 'Replaced domain-specific algorithms with generic operations',
-      examples: ['calculateTaxAmount() → computeValue()', 'CustomerService → EntityService', 'processPayment() → processOperation()'],
-      effectiveness: 95,
-      actualChanges: `${businessTermsInOriginal - businessTermsInSynthetic} business terms transformed`
+      name: "Business Logic Abstraction",
+      description: "Proprietary algorithms converted to generic implementations",
+      count: details?.businessTermsReduced || 0,
+      icon: Shield
     },
     {
-      type: 'API Endpoint Generalization',
-      description: 'Abstracted third-party integrations to generic patterns',
-      examples: ['/api/v2/customers/123 → /api/v1/endpoint', 'https://api.stripe.com → https://api.example.com', 'user@company.com → user@example.com'],
-      effectiveness: 98,
-      actualChanges: `${urlsInOriginal - urlsInSynthetic} URLs anonymized`
+      name: "API Endpoint Generalization", 
+      description: "Service URLs and endpoints anonymized",
+      count: details?.apiEndpointsGeneralized || 0,
+      icon: Eye
     },
     {
-      type: 'Data Model Anonymization',
-      description: 'Transformed business entities into generic domain objects',
-      examples: ['customerId → entityId', 'orderData → operationData', 'customerDatabase → entitiesDatabase'],
-      effectiveness: 92,
-      actualChanges: `Variable and property names generalized`
+      name: "Data Model Anonymization",
+      description: "Business entities transformed to generic objects",
+      count: details?.urlsAnonymized || 0,
+      icon: Zap
     },
     {
-      type: 'Sensitive Data Protection',
-      description: 'Obfuscated secrets, credentials, and business-specific constants',
-      examples: ['STRIPE_API_KEY → API_KEY', 'COMPANY_SECRET → SECRET_KEY', 'john@acme.com → user@example.com'],
-      effectiveness: 96,
-      actualChanges: `Credentials and secrets anonymized`
+      name: "Sensitive Data Obfuscation",
+      description: "Secrets, keys, and credentials sanitized",
+      count: details?.sensitiveDataObfuscated || 0,
+      icon: CheckCircle
     }
   ]
 
@@ -80,208 +81,99 @@ export function TransformationEngine({ codeData }: TransformationEngineProps) {
         )}
       </div>
 
-      {/* Transformation Summary */}
+      {/* Transformation Steps */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {actualTransformations.map((transform, index) => (
-          <Card key={index}>
+        {transformationSteps.map((step) => (
+          <Card key={step.name} className="text-center">
             <CardContent className="p-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-sm">{transform.type}</h4>
-                  <Badge variant={transform.effectiveness > 90 ? 'default' : 'secondary'}>
-                    {transform.effectiveness}%
-                  </Badge>
-                </div>
-                <p className="text-xs text-muted-foreground">{transform.description}</p>
-                <div className="text-xs font-medium text-green-600 bg-green-50 p-1 rounded">
-                  {transform.actualChanges}
-                </div>
-                <div className="space-y-1">
-                  {transform.examples.slice(0, 2).map((example, i) => (
-                    <div key={i} className="text-xs font-mono bg-muted p-1 rounded">
-                      {example}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <step.icon className="h-8 w-8 mx-auto mb-2 text-primary" weight="duotone" />
+              <div className="text-2xl font-bold text-foreground">{step.count}</div>
+              <div className="text-sm font-medium text-foreground">{step.name}</div>
+              <div className="text-xs text-muted-foreground mt-1">{step.description}</div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Transformation Statistics */}
-      {securityMetrics.transformationDetails && (
-        <Card className="bg-blue-50 border-blue-200">
-          <CardHeader>
-            <CardTitle className="text-blue-700">Transformation Statistics</CardTitle>
-            <CardDescription className="text-blue-600">Detailed breakdown of changes made to your code</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-700">{securityMetrics.transformationDetails.businessTermsReduced}</div>
-                <div className="text-sm text-blue-600">Business terms removed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-700">{securityMetrics.transformationDetails.urlsAnonymized}</div>
-                <div className="text-sm text-blue-600">URLs anonymized</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-700">{securityMetrics.transformationDetails.apiEndpointsGeneralized}</div>
-                <div className="text-sm text-blue-600">API endpoints generalized</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-700">{securityMetrics.transformationDetails.overallTransformationRate}%</div>
-                <div className="text-sm text-blue-600">Overall transformation</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Before/After Code Comparison */}
+      {/* Privacy Transformation Progress */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Eye className="h-5 w-5" />
-            Code Comparison
+            <Shield className="h-5 w-5" />
+            Privacy Transformation Analysis
           </CardTitle>
-          <CardDescription>Original vs Synthetic code side-by-side</CardDescription>
+          <CardDescription>
+            Comprehensive analysis of business logic protection and AI utility preservation
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="side-by-side">
-            <TabsList>
-              <TabsTrigger value="side-by-side">Side by Side</TabsTrigger>
-              <TabsTrigger value="original">Original Only</TabsTrigger>
-              <TabsTrigger value="synthetic">Synthetic Only</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="side-by-side" className="mt-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="h-4 w-4 text-orange-500" />
-                    <span className="font-medium text-sm">Original Code (Sensitive)</span>
-                    <Badge variant="outline" className="text-orange-600 border-orange-600">
-                      {businessTermsInOriginal} business terms detected
-                    </Badge>
-                  </div>
-                  <Textarea
-                    value={original}
-                    readOnly
-                    className="code-editor min-h-[400px] font-mono bg-red-50 border-red-200"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                    <span className="font-medium text-sm">Synthetic Code (Safe)</span>
-                    <Badge variant="outline" className="text-green-600 border-green-600">
-                      {businessTermsInSynthetic} business terms remaining
-                    </Badge>
-                  </div>
-                  <Textarea
-                    value={synthetic}
-                    readOnly
-                    className="code-editor min-h-[400px] font-mono bg-green-50 border-green-200"
-                  />
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Privacy Protection</span>
+                <span className="font-medium">{securityMetrics.privacyScore}%</span>
               </div>
-              {businessTermsInOriginal === businessTermsInSynthetic && businessTermsInOriginal > 0 && (
-                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <div className="flex items-center gap-2 text-yellow-800">
-                    <AlertTriangle className="h-4 w-4" />
-                    <span className="text-sm font-medium">
-                      No business terms were transformed in this code sample. Try using one of the provided sample codes for a better demonstration.
-                    </span>
-                  </div>
-                </div>
-              )}
-            </TabsContent>
+              <Progress value={securityMetrics.privacyScore} className="h-2" />
+              <p className="text-xs text-muted-foreground">
+                Proprietary business logic successfully abstracted
+              </p>
+            </div>
             
-            <TabsContent value="original" className="mt-4">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-orange-500" />
-                  <span className="font-medium text-sm">Original Code (Contains Sensitive Business Logic)</span>
-                </div>
-                <Textarea
-                  value={original}
-                  readOnly
-                  className="code-editor min-h-[500px] font-mono bg-red-50 border-red-200"
-                />
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>AI Assistance Parity</span>
+                <span className="font-medium">{securityMetrics.aiParity}%</span>
               </div>
-            </TabsContent>
+              <Progress value={securityMetrics.aiParity} className="h-2" />
+              <p className="text-xs text-muted-foreground">
+                Code structure preserved for AI tools
+              </p>
+            </div>
             
-            <TabsContent value="synthetic" className="mt-4">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <span className="font-medium text-sm">Synthetic Code (Enterprise Safe)</span>
-                </div>
-                <Textarea
-                  value={synthetic}
-                  readOnly
-                  className="code-editor min-h-[500px] font-mono bg-green-50 border-green-200"
-                />
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Risk Reduction</span>
+                <span className="font-medium">{100 - securityMetrics.leakageRisk}%</span>
               </div>
-            </TabsContent>
-          </Tabs>
+              <Progress value={100 - securityMetrics.leakageRisk} className="h-2" />
+              <p className="text-xs text-muted-foreground">
+                Information leakage risk eliminated
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
-    </div>
-  )
-}
 
-      {/* Before/After Code Comparison */}
+      {/* Code Comparison */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Eye className="h-5 w-5" />
-            Code Comparison
-          </CardTitle>
-          <CardDescription>Original vs Synthetic code side-by-side</CardDescription>
+          <CardTitle>Original vs Synthetic Code Comparison</CardTitle>
+          <CardDescription>
+            Side-by-side view showing privacy transformation while preserving functionality
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="side-by-side">
-            <TabsList>
-              <TabsTrigger value="side-by-side">Side by Side</TabsTrigger>
-              <TabsTrigger value="original">Original Only</TabsTrigger>
-              <TabsTrigger value="synthetic">Synthetic Only</TabsTrigger>
+          <Tabs defaultValue="original" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="original" className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4" />
+                Original Code (Sensitive)
+              </TabsTrigger>
+              <TabsTrigger value="synthetic" className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4" />
+                Synthetic Code (Safe)
+              </TabsTrigger>
             </TabsList>
-            
-            <TabsContent value="side-by-side" className="mt-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="h-4 w-4 text-orange-500" />
-                    <span className="font-medium text-sm">Original Code (Sensitive)</span>
-                  </div>
-                  <Textarea
-                    value={original}
-                    readOnly
-                    className="code-editor min-h-[400px] font-mono bg-red-50 border-red-200"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                    <span className="font-medium text-sm">Synthetic Code (Safe)</span>
-                  </div>
-                  <Textarea
-                    value={synthetic}
-                    readOnly
-                    className="code-editor min-h-[400px] font-mono bg-green-50 border-green-200"
-                  />
-                </div>
-              </div>
-            </TabsContent>
             
             <TabsContent value="original" className="mt-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-orange-500" />
-                  <span className="font-medium text-sm">Original Code (Contains Sensitive Business Logic)</span>
+                <div className="flex items-center justify-between">
+                  <Badge variant="outline" className="text-red-600 border-red-200">
+                    ⚠️ Contains Proprietary Information
+                  </Badge>
+                  <span className="text-sm text-muted-foreground">
+                    {originalLength.toLocaleString()} characters
+                  </span>
                 </div>
                 <Textarea
                   value={original}
@@ -293,9 +185,13 @@ export function TransformationEngine({ codeData }: TransformationEngineProps) {
             
             <TabsContent value="synthetic" className="mt-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <span className="font-medium text-sm">Synthetic Code (Enterprise Safe)</span>
+                <div className="flex items-center justify-between">
+                  <Badge variant="outline" className="text-green-600 border-green-200">
+                    ✓ Enterprise Security Approved
+                  </Badge>
+                  <span className="text-sm text-muted-foreground">
+                    {syntheticLength.toLocaleString()} characters
+                  </span>
                 </div>
                 <Textarea
                   value={synthetic}

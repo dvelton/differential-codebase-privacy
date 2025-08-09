@@ -316,6 +316,8 @@ export function AIComparisonDemo({ codeData }: AIComparisonDemoProps) {
   )
 }
 
+// Component properly closed
+
 function generateMockAIResponses(query: any, codeData: CodeData): AIResponse {
   const responses = {
     'code-review': {
